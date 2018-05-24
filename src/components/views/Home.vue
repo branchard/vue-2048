@@ -7,10 +7,10 @@
 <script>
     import Board from '@/components/board/Board';
     import board from "../../Board.js"
-    console.log(board);
-
+    
     board.init(4);
-    board.log();
+    console.log(board.squares);
+    //board.log();
 
     document.onkeydown = move;
 
@@ -38,9 +38,9 @@
             direction = 'down';
         }
 
-        //console.log(direction);
-        //board.move(direction);
-        //board.log();
+        console.log(direction);
+        board.move(direction);
+        console.log(board.squares);
     }
     function checkEventObj ( _event_ )
     {

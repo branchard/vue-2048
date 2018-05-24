@@ -15,7 +15,7 @@
 
 <style lang="scss" scoped>
     .md-app {
-        max-height: 100vh;
+        height: 100vh;
     }
 
     .md-button {

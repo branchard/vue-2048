@@ -1,13 +1,15 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <Layout/>
   </div>
 </template>
 
 <script>
+import Layout from './components/Layout';
+
 export default {
   name: 'App',
+  components: { Layout }
 };
 </script>
 

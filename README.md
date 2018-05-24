@@ -1,2 +1,2 @@
 # vue-2048
-Just a 2048 game made with Vue.js
+A 2048 game made with Vue.js with keybord compatibility and A.I.

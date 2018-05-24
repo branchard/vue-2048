@@ -30,8 +30,8 @@
         display: flex;
         flex-direction: column;
         margin: auto;
-        width: calc(100vh - (64px + 16px * 2));
-        height: calc(100vh - (64px + 16px * 2));
+        width: calc(100vh - (64px + 12px * 2));
+        height: calc(100vh - (64px + 12px * 2));
 
         .grid-container {
             flex: 1;

@@ -16,6 +16,10 @@
 <style lang="scss" scoped>
     .md-app {
         height: 100vh;
+        
+        .md-app-content {
+            padding: 12px;
+        }
     }
 
     .md-button {

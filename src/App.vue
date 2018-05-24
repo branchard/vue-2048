@@ -10,9 +10,3 @@ export default {
   components: { Layout }
 };
 </script>
-
-<style>
-#app {
-
-}
-</style>

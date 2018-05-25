@@ -38,6 +38,7 @@ class Game {
         }
 
         this.spawnRandomTiles(lodash.round(this.size / 2));
+        this.initialTime = performance.now();
     }
 
     spawnRandomTiles(n){
@@ -102,6 +103,11 @@ class Game {
         }
 
         return true;
+    }
+
+    // in sec
+    getTime(){
+        return(lodash.round((performance.now() - this.initialTime) / 1000));
     }
 
     getGrid(){

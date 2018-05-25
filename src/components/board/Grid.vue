@@ -109,9 +109,10 @@
     import Tile from '@/components/board/Tile';
     import Game from '@/utils/Game';
     import NaiveAi from '@/utils/NaiveAi';
+    import leaderboardApi from '@/utils/leaderboardApi';
 
     const gameLocalStorageName = 'gameState';
-    const iaTimeout = 250; // in ms
+    const iaTimeout = 200; // in ms
 
     export default {
         name: 'Grid',
@@ -153,6 +154,9 @@
                 }));
                 this.onScoring(this.gameInstance.getScore());
                 this.isGameEnd = this.gameInstance.isGameEnd();
+                if(this.isGameEnd){
+                    leaderboardApi.postScore(this.gameInstance.getScore(), this.gameInstance.getTime(), this.isAiEnabled);
+                }
                 this.$forceUpdate()
             }
         },

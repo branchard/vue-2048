@@ -25,7 +25,7 @@
     </div>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
     .leaderboard {
         width: 100%;
         height: 100%;
@@ -35,6 +35,11 @@
             height: 100%;
             margin-right: 0;
             margin-left: 0;
+
+            .md-table-content {
+                height: none!important;
+                max-height: none!important;
+            }
         }
     }
     .md-field {

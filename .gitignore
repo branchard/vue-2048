@@ -5,6 +5,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 /test/unit/coverage/
+leaderboard_api/node_modules
+leaderboard_api/leaderboard.db
+leaderboard_api/package-lock.json
 
 # Editor directories and files
 .idea

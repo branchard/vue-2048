@@ -29,9 +29,10 @@ class NaiveAi {
                 // if grid has changes
                 if(JSON.stringify(this.gameInstance.getGrid()) !== initGridState){
                     this.updateCallback();
-                    break;
+                    return;
                 }
             }
+            console.log('WTF, the game is not ended, but I can\'t move');
         }
     }
 }

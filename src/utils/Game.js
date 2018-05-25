@@ -20,12 +20,12 @@ class Game {
          * |
          * y
          *
-         *[
+         * [
          *    [0, 0, 0, 0],
          *    [0, 0, 0, 0],
          *    [0, 0, 0, 0],
          *    [0, 0, 0, 0],
-         *]
+         * ]
          */
 
         // create 2 dimensions array with this.size size filled with 0
@@ -108,8 +108,16 @@ class Game {
         return this.grid;
     }
 
+    setGrid(grid){
+        this.grid = grid;
+    }
+
     getScore(){
         return this.score;
+    }
+
+    setScore(score){
+        this.score = score;
     }
 
     onUp(){

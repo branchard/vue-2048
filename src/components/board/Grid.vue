@@ -4,6 +4,7 @@
             <div>
                 Game over
             </div>
+            <md-button class="md-raised" v-on:click="restart">Restart</md-button>
         </div>
         <div class="game-grid-inner">
             <div v-for="(line, index) in grid" :key="index">
@@ -28,7 +29,7 @@
             z-index: 100;
             width: 100%;
             height: 100%;
-            background-color: rgba($color: #000000, $alpha: .5);
+            background-color: rgba($color: #000000, $alpha: .6);
             color: #f4f4f4;
             font-weight: bold;
             font-size: 42px;
@@ -39,8 +40,15 @@
             align-content:center;
             flex-direction:column;
 
+            box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.01), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+
             &.game-ended {
                 display: flex;
+            }
+
+            .md-raised {
+                width: 160px;
+                margin: 80px auto 0 auto;
             }
         }        
 
@@ -97,6 +105,8 @@
     import Tile from '@/components/board/Tile';
     import Game from '@/utils/Game';
 
+    const gameLocalStorageName = 'gameState';
+
     export default {
         name: 'Grid',
         components: { Tile },
@@ -113,24 +123,41 @@
                 isGameEnd : false            
             }
         },
+        methods: {
+            restart: function(){
+                this.gameInstance = new Game(4);
+                this.refresh();
+            },
+            refresh: function(){
+                this.grid = this.gameInstance.getGrid();
+                localStorage.setItem(gameLocalStorageName, JSON.stringify({
+                    grid: this.grid,
+                    score: this.gameInstance.getScore()
+                }));
+                this.onScoring(this.gameInstance.getScore());
+                this.isGameEnd = this.gameInstance.isGameEnd();
+                this.$forceUpdate()
+            }
+        },
         created: function () {
-            let gameInstance = new Game(4);
-                
-            this.grid = gameInstance.getGrid();
+            this.gameInstance = new Game(4);
 
-            console.log(gameInstance.getGrid());
-            
+            let storedGameState = JSON.parse(localStorage.getItem(gameLocalStorageName));
+            if(storedGameState){
+                this.gameInstance.setGrid(storedGameState.grid);
+                this.gameInstance.setScore(storedGameState.score);
+            }
+
+            this.refresh();
 
             let onKeyPressed = (direction) => {
-                if(gameInstance && !this.isGameEnd){
-                    gameInstance[direction]();
-                    this.grid = gameInstance.getGrid();
-                    this.onScoring(gameInstance.getScore());
-                    this.isGameEnd = gameInstance.isGameEnd();
-                    this.$forceUpdate()
+                if(this.gameInstance && !this.isGameEnd){
+                    this.gameInstance[direction]();
+                    this.refresh();
                 }
             }
 
+            // add keyboard listerners
             document.addEventListener('keydown', function(e) {
                 switch (e.key) {
                     case 'ArrowUp':

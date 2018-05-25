@@ -16,7 +16,7 @@
                 <md-card-header>
                     <md-card-header-text>
                         <div class="md-title">High score</div>
-                        <div class="md-subhead">7800</div>
+                        <div class="md-subhead">{{ highScore }}</div>
                     </md-card-header-text>
                 </md-card-header>
             </md-card>            
@@ -66,17 +66,24 @@
 <script>
 import Grid from '@/components/board/Grid';
 
+const highScoreLocalStorageName = 'highScore';
+
 export default {
     name: 'Board',
     data: function () {
         return {
-            score: 0
+            score: 0,
+            highScore: localStorage.getItem(highScoreLocalStorageName) || 0
         }
     },
     methods: {
         onScoring: function(score){
             this.score = score;
-        }
+            if(score > this.highScore){
+                this.highScore = score;
+                localStorage.setItem(highScoreLocalStorageName, score);
+            }
+        },
     },
     components: { Grid }
 };

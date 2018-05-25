@@ -4,7 +4,8 @@
             <div>
                 Game over
             </div>
-            <md-button class="md-raised" v-on:click="restart">Restart</md-button>
+            <md-button class="md-raised md-accent" v-on:click="restartWithAi">Restart with AI</md-button>
+            <md-button class="md-raised md-primary" v-on:click="restartWithoutAi">Restart without AI</md-button>
         </div>
         <div class="game-grid-inner">
             <div v-for="(line, index) in grid" :key="index">
@@ -47,8 +48,11 @@
             }
 
             .md-raised {
-                width: 160px;
-                margin: 80px auto 0 auto;
+                width: 256px;
+                margin: 16px auto 0 auto;
+                &:nth-child(2){
+                    margin: 50px auto 0 auto;
+                }
             }
         }        
 
@@ -104,8 +108,10 @@
     //import { mapGetters, mapActions } from 'vuex';
     import Tile from '@/components/board/Tile';
     import Game from '@/utils/Game';
+    import NaiveAi from '@/utils/NaiveAi';
 
     const gameLocalStorageName = 'gameState';
+    const iaTimeout = 250; // in ms
 
     export default {
         name: 'Grid',
@@ -120,13 +126,24 @@
             return {
                 // 2 dimentions array that represent game state
                 grid: [],
-                isGameEnd : false            
+                isGameEnd: false,
+                isAiEnabled: true
             }
         },
         methods: {
+            restartWithAi: function(){
+                this.isAiEnabled = true;
+                this.restart();
+            },
+            restartWithoutAi: function(){
+                this.isAiEnabled = false;
+                this.restart();
+            },
             restart: function(){
                 this.gameInstance = new Game(4);
                 this.refresh();
+                this.ai.setGameInstance(this.gameInstance);
+                this.ai.next(this.isAiEnabled);
             },
             refresh: function(){
                 this.grid = this.gameInstance.getGrid();
@@ -149,6 +166,16 @@
             }
 
             this.refresh();
+
+            this.ai = new NaiveAi(this.gameInstance);
+            let iaCallback = () => {
+                this.refresh();
+                setTimeout(() => {
+                    this.ai.next(this.isAiEnabled);
+                }, iaTimeout);
+            };
+            this.ai.setUpdateCallback(iaCallback);
+            this.ai.next(this.isAiEnabled);
 
             let onKeyPressed = (direction) => {
                 if(this.gameInstance && !this.isGameEnd){

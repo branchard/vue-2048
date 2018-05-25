@@ -50,7 +50,7 @@ class Game {
                 let y = lodash.random(0, this.size - 1);
                 let x = lodash.random(0, this.size - 1);
                 if(this.grid[y][x] === 0){
-                    // 10% chance to get a 4
+                    // 10% chance to spawn a 4
                     this.grid[y][x] = Math.random() < 0.1 ? 4 : 2;
                     break;
                 }
@@ -107,7 +107,7 @@ class Game {
 
     // in sec
     getTime(){
-        return(lodash.round((performance.now() - this.initialTime) / 1000));
+        return(lodash.round(((performance.now() - this.initialTime) / 1000), 2));
     }
 
     getGrid(){

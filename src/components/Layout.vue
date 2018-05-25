@@ -16,6 +16,12 @@
 <style lang="scss" scoped>
     .md-app {
         height: 100vh;
+
+        @media (max-width: 960px){
+            .md-toolbar, .md-toolbar-row {
+                min-height: 64px;
+            }
+        }
         
         .md-app-content {
             padding: 12px;

@@ -1,14 +1,14 @@
 <template>
     <div class="game-board">
         <div class="grid-container">
-            <Grid/>
+            <Grid :onScoring=onScoring />
         </div>
         <div class="score-container md-layout">
             <md-card class="md-primary md-layout-item">
                 <md-card-header>
                     <md-card-header-text>
                         <div class="md-title">Score</div>
-                        <div class="md-subhead">2600</div>
+                        <div class="md-subhead">{{ score }}</div>
                     </md-card-header-text>
                 </md-card-header>
             </md-card>
@@ -56,6 +56,8 @@
 
             .md-subhead {
                 opacity: 0.8;
+                font-size: 16px;
+                line-height: 24px;
             }
         }
     }
@@ -66,6 +68,16 @@ import Grid from '@/components/board/Grid';
 
 export default {
     name: 'Board',
+    data: function () {
+        return {
+            score: 0
+        }
+    },
+    methods: {
+        onScoring: function(score){
+            this.score = score;
+        }
+    },
     components: { Grid }
 };
 </script>
